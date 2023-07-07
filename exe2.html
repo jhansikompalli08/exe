@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section class="container">
+        <form  onsubmit="saveToLocalStorage(event)">
+            <div>
+                <label for="name">Name:</label>
+                <input  type="text" id="name">
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email">
+            </div>
+            <div>
+                <label for="phno">PhoneNO:</label>
+                <input type="tel" id="phno">
+            </div>
+            <input class="btn" type="submit" value="Submit">
+            </div>
+        </form>
+        <ul id="listOfitems"></ul>    
+</body>
+<script>  
+    function saveToLocalStorage(event){
+        event.preventDefault();
+        const name=event.target.name.value;
+        const emai=event.target.email.value;
+        const phonenumber=event.target.phno.value;
+        //localStorage.setItem('name',name);
+        //localStorage.setItem('emai',emai);
+        //localStorage.setItem('phonenumber',phonenumber);
+        let obj={
+            name,
+            emai,
+            phonenumber
+        }
+        localStorage.setItem(obj.emai,JSON.stringify(obj))
+        showuserOnscreen(obj)
+    }
+    function showuserOnscreen(obj){
+    const Parele=document.getElementById('listOfitems');
+    const childele=document.createElement('li');
+    childele.textContent=obj.name + ' - ' + obj.emai + ' - ' + obj.phonenumber
+    Parele.appendChild(childele);
+    }
+</script>
+</html>
