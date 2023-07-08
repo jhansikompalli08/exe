@@ -24,7 +24,8 @@
             <input class="btn" type="submit" value="Submit">
             </div>
         </form>
-        <ul id="listOfitems"></ul>    
+        <ul id="listOfitems">
+        </ul>    
 </body>
 <script>  
     function saveToLocalStorage(event){
@@ -42,12 +43,25 @@
         }
         localStorage.setItem(obj.emai,JSON.stringify(obj))
         showuserOnscreen(obj)
+       
+        
     }
     function showuserOnscreen(obj){
     const Parele=document.getElementById('listOfitems');
     const childele=document.createElement('li');
     childele.textContent=obj.name + ' - ' + obj.emai + ' - ' + obj.phonenumber
     Parele.appendChild(childele);
+
+    var deleteBtn=document.createElement('input');
+    deleteBtn.type='button';
+    deleteBtn.value='delete';
+    deleteBtn.onclick=()=>{
+        localStorage.removeItem(obj.emai)
+        Parele.removeChild(childele);
     }
+    childele.appendChild(deleteBtn)
+    Parele.appendChild(childele)
+    }
+    
 </script>
 </html>
