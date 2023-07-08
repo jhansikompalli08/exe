@@ -11,15 +11,15 @@
         <form  onsubmit="saveToLocalStorage(event)">
             <div>
                 <label for="name">Name:</label>
-                <input  type="text" id="name">
+                <input  type="text" name="name" id="nameid">
             </div>
             <div>
                 <label for="email">Email:</label>
-                <input type="email" id="email">
+                <input type="email" name="email" id="emailid">
             </div>
             <div>
                 <label for="phno">PhoneNO:</label>
-                <input type="tel" id="phno">
+                <input type="tel" name="phno" id="phnoid">
             </div>
             <input class="btn" type="submit" value="Submit">
             </div>
@@ -58,8 +58,22 @@
     deleteBtn.onclick=()=>{
         localStorage.removeItem(obj.emai)
         Parele.removeChild(childele);
+    
+    }
+    var editBtn=document.createElement('input');
+    editBtn.type='button';
+    editBtn.value='edit';
+    editBtn.onclick=()=>{
+        localStorage.removeItem(obj.emai)
+        Parele.removeChild(childele);
+        
+        document.getElementById('nameid').value=obj.name
+        document.getElementById('emailid').value=obj.emai
+        document.getElementById('phnoid').value=obj.phonenumber
+    
     }
     childele.appendChild(deleteBtn)
+    childele.appendChild(editBtn)
     Parele.appendChild(childele)
     }
     
