@@ -27,6 +27,9 @@
         <ul id="listOfitems">
         </ul>    
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js">
+    
+</script>
 <script>  
     function saveToLocalStorage(event){
         event.preventDefault();
@@ -41,8 +44,17 @@
             emai,
             phonenumber
         }
-        localStorage.setItem(obj.emai,JSON.stringify(obj))
-        showuserOnscreen(obj)
+        axios.post("https://crudcrud.com/api/6115205613a44ce387fc1e46bed1e4bd/appointment",obj)
+        .then((respone)=>{
+            showuserOnscreen(respone.data)
+            console.log(respone)
+        })
+        .catch((err)=>{
+            document.body.innerHTML=document.body.innerHTML +"<h4> something went wrong </h4>"
+            console.log(err)
+        })
+        //localStorage.setItem(obj.emai,JSON.stringify(obj))
+        //showuserOnscreen(obj)
        
         
     }
