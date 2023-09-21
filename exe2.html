@@ -58,6 +58,31 @@
        
         
     }
+    window.addEventListener("DOMContentLoaded",()=>{
+
+       const data= axios.get("https://crudcrud.com/api/6115205613a44ce387fc1e46bed1e4bd/appointment")
+        .then((response)=>{
+            //showuserOnscreen(respone.data)
+            //console.log(respone)
+            for(var i=0;i<response.data.length;i++){
+                showuserOnscreen(response.data[i])
+            }
+        })
+        .catch((err)=>{
+            //document.body.innerHTML=document.body.innerHTML +"<h4> something went wrong </h4>"
+            console.log(err)
+        })
+        console.log(data);
+       /* const localStorageObj=localStorage;
+        const localStoragekeys=Object.keys(localStorageObj)
+        for(var i=0;i<localStoragekeys.length;i++){
+            const key=localStoragekeys[i]
+            const userDetailsString=localStorageObj[keys];
+            const userDetailsObj=JSON.parse(userDetailsString);
+            showuserOnscreen(userDetailsObj)
+        }*/
+
+    })
     function showuserOnscreen(obj){
     const Parele=document.getElementById('listOfitems');
     const childele=document.createElement('li');
