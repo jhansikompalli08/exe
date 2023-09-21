@@ -63,7 +63,7 @@
        const data= axios.get("https://crudcrud.com/api/6115205613a44ce387fc1e46bed1e4bd/appointment")
         .then((response)=>{
             //showuserOnscreen(respone.data)
-            //console.log(respone)
+            console.log(respone)
             for(var i=0;i<response.data.length;i++){
                 showuserOnscreen(response.data[i])
             }
