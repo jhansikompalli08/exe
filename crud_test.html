@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section class="container">
+        <form onsubmit="saveToLocalStorage(event)">
+            <div>
+              <label for="SellingPrice"> SellingPrice</label>
+              <input type="text" name="SellingPrice" id="priceid">
+            </div>
+            <div>
+             <label for="ProductName">ProductName </label>
+             <input type="text" name="ProductName" id="productid">
+            </div>
+            <div>
+                <label for="ChooseCategory">ChooseCategory</label>
+                <select name="ChooseCategory" id="categoryid">
+                 <option value="electronicitems">Electronic</option>
+                 <option value="fooditems">Food</option>
+                 <option value="skincare">SkinCare</option>
+                </select>
+            </div>
+            <input class="btn" type="submit" value="Add Product">
+        </form>
+        <ul id="listOfitems">
+        </ul> 
+    </section>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js">
+    
+</script>
+<script>
+function saveToLocalStorage(event){
+    event.preventDefault();
+    const Sp=event.target.SellingPrice.value;
+    const Pn=event.target.ProductName.value;
+    const Cc=event.target.ChooseCategory.value;
+    const obj={
+        Sp,
+        Pn,
+        Cc
+    }
+axios.post("https://crudcrud.com/api/3a94f3bfe76c47498b1b9bdc8ff4512c/addproduct",obj)
+        .then((respone)=>{
+            showuserOnscreen(respone.data)
+            //console.log(respone)
+        })
+        .catch((err)=>{
+            //document.body.innerHTML=document.body.innerHTML +"<h4> something went wrong </h4>"
+            console.log(err)
+        })
+        //localStorage.setItem(obj.emai,JSON.stringify(obj))
+        //showuserOnscreen(obj)
+       
+        
+    }
+    window.addEventListener("DOMContentLoaded",()=>{
+
+const data= axios.get("https://crudcrud.com/api/3a94f3bfe76c47498b1b9bdc8ff4512c/addproduct")
+ .then((response)=>{
+     //showuserOnscreen(respone.data)
+     console.log(response)
+     for(var i=0;i<response.data.length;i++){
+         showuserOnscreen(response.data[i])
+     }
+ })
+ .catch((err)=>{
+     //document.body.innerHTML=document.body.innerHTML +"<h4> something went wrong </h4>"
+     console.log(err)
+ })
+ console.log(data);
+
+})
+function showuserOnscreen(obj){
+        
+        const Parele=document.getElementById('listOfitems');
+        const childele=document.createElement('li');
+        childele.textContent=obj.Sp + ' - ' + obj.Pn+ ' - ' + obj.Cc
+        Parele.appendChild(childele);
+         
+        function removeUserFromScreen(Sp) {
+        const ParentNode=document.getElementById('listOfitems');
+        const childNodeToBeDeleted=document.getElementById(priceid);
+        if(childNodeToBeDeleted){
+            ParentNode.removeChild(childNodeToBeDeleted)
+        }
+    }
+    var deleteBtn=document.createElement('input');
+    deleteBtn.type='button';
+    deleteBtn.value='delete';
+        deleteBtn.onclick=()=>{
+            //localStorage.removeItem(obj.emai)
+            axios.delete(`https://crudcrud.com/api/3a94f3bfe76c47498b1b9bdc8ff4512c/addproduct/${obj._id}`)
+        .then(response => {
+          console.log(response.data);
+    
+          removeUserFromScreen(obj._id);
+        })
+         .catch((err)=> {
+            console.log(err);
+        });
+        //localStorage.removeItem(obj.emai)
+        Parele.removeChild(childele);
+    
+    }
+    var editBtn=document.createElement('input');
+    editBtn.type='button';
+    editBtn.value='edit';
+    editBtn.onclick=()=>{
+        axios.get("https://crudcrud.com/api/3a94f3bfe76c47498b1b9bdc8ff4512c/addproduct")
+ .then((response)=>{
+    console.log(response.data);
+    
+          removeUserFromScreen(obj._id);
+        })
+         .catch((err)=> {
+            console.log(err);
+        });
+        //localStorage.removeItem(obj.Sp)
+        Parele.removeChild(childele);
+        
+        document.getElementById('priceid').value=obj.Sp
+        document.getElementById('productid').value=obj.Pn
+        document.getElementById('categoryid').value=obj.Cc
+    
+    }
+    childele.appendChild(deleteBtn)
+    childele.appendChild(editBtn)
+    Parele.appendChild(childele)
+    }
+</script>
+</html>
